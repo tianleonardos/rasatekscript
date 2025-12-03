@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: laravel-app
+    env: php
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: heroku-php-apache2 public/
+    envVars:
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: true
+        
