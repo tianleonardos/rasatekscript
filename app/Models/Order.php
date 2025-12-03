@@ -1,0 +1,41 @@
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Order extends Model
+{
+    protected $fillable = [
+        'user_id', 'total_price', 'status',
+        'customer_name', 'customer_phone', 'notes',
+        'payment_method', 'e_wallet_type'
+    ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($order) {
+            // Delete all reviews when order is deleted
+            $order->reviews()->delete();
+        });
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+}
