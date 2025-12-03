@@ -22,18 +22,36 @@ class CartController extends Controller
     {
         $product = Product::findOrFail($productId);
         
+        // 1. Cek Stok (Jika habis)
         if ($product->stock < 1) {
+            // Jika request AJAX (dari tombol tanpa reload)
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Stok produk habis!'
+                ]);
+            }
+            // Jika request biasa
             return redirect()->back()->with('error', 'Stok produk habis!');
         }
 
         $cart = session()->get('cart', []);
 
+        // 2. Cek jika barang sudah ada di keranjang
         if (isset($cart[$productId])) {
+            // Cek apakah jumlah melebihi stok
             if ($cart[$productId]['quantity'] >= $product->stock) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Jumlah melebihi stok tersedia!'
+                    ]);
+                }
                 return redirect()->back()->with('error', 'Jumlah melebihi stok tersedia!');
             }
             $cart[$productId]['quantity']++;
         } else {
+            // Barang baru
             $cart[$productId] = [
                 'id' => $product->id,
                 'name' => $product->name,
@@ -46,9 +64,19 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
+        // 3. Respon Sukses
+        // INI BAGIAN PENTING: Mengirim data JSON ke Javascript agar halaman tidak reload
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Produk berhasil ditambahkan ke keranjang!',
+                'total_cart' => count($cart) // Mengirim jumlah item terbaru untuk update badge navbar
+            ]);
+        }
+
+        // Fallback untuk browser lama (tetap redirect)
         return redirect()->back()->with('success', 'Produk ditambahkan ke keranjang!');
     }
-
     public function update(Request $request, $productId)
     {
         $cart = session()->get('cart', []);

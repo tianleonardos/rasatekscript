@@ -34,7 +34,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if($item->product && $item->product->image)
-                                                    <img src="{{ asset('images/' . $item->product->image) }}" width="50" class="rounded me-2" 
+                                                    <img src="{{ asset('storage/' . $product->image) }}" width="50" class="rounded me-2" 
                                                     alt="{{ $item->product->name }}">
                                                 @else
                                                     <div class="bg-light rounded me-2 d-flex align-items-center justify-content-center"

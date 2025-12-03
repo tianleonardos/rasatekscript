@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-6 mb-4">
             @if($product->image)
-                <img src="{{ asset('images/' . $product->image) }}" class="img-fluid rounded shadow" alt="{{ $product->name }}">
+                <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded shadow" alt="{{ $product->name }}">
             @else
                 <div class="bg-light rounded shadow d-flex align-items-center justify-content-center" style="height: 400px;">
                     <i class="fas fa-cookie-bite fa-10x text-muted"></i>

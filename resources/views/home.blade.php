@@ -7,16 +7,39 @@
     <!-- Hero Section -->
     <div class="row mb-5">
         <div class="col-12">
-            <div class="p-5 text-center bg-gradient rounded-3" style="background: brown;">
-                <h1 class="text-white fw-bold mb-3">🍪 Selamat Datang di RasaTekScript</h1>
-                <p class="text-white fs-5">Cookies homemade terbaik dengan bahan premium pilihan</p>
+            <div class="p-5 text-center bg-gradient rounded-3 d-flex flex-column align-items-center justify-content-center scroll-fade" 
+                 style="background: #A03C3C; position: relative; overflow: hidden;">
+                
+                <!-- === MODE 1: TAMPILAN GAMBAR (Sesuai Contoh Design) === -->
+                <!-- ID 'visual-banner' ini akan disembunyikan otomatis jika gambar error -->
+                <div id="visual-banner" class="text-center w-100">
+                    <p class="text-white fs-5 mb-2" style="font-family: 'Poppins', sans-serif; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                        Welcome To
+                    </p>
+                    
+                    <img src="{{ asset('images/logo.png') }}" 
+                         alt="Logo RasaTekScript" 
+                         class="img-fluid mb-3" 
+                         style="max-height: 200px; object-fit: contain; filter: drop-shadow(0px 4px 3px rgba(0,0,0,0.3));"
+                         onerror="document.getElementById('visual-banner').style.display='none'; document.getElementById('text-banner').style.display='block';">
+                </div>
+
+                <!-- === MODE 2: TAMPILAN TEKS (Fallback / Cadangan) === -->
+                <!-- Default-nya disembunyikan (display: none), hanya muncul jika gambar di atas error -->
+                <h1 id="text-banner" class="text-white fw-bold mb-3" style="display: none; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                    🍪 Selamat Datang di RasaTekScript
+                </h1>
+                
+                <!-- Deskripsi (Selalu Muncul di kedua mode) -->
+                <p class="text-white fs-5 mb-0">
+                    Cookies homemade terbaik dengan bahan premium pilihan!
+                </p>
             </div>
         </div>
     </div>
-
     <!-- Category Filter -->
     <div class="row mb-4">
-        <div class="col-12">
+        <div class="col-12 scroll-fade">
             <h4 class="mb-3">Kategori</h4>
             <div class="btn-group" role="group">
                 <a href="{{ route('home') }}" class="btn {{ !isset($selectedCategory) ? 'btn-primary' : 'btn-outline-primary' }}">
@@ -34,22 +57,22 @@
 
     <!-- Products Grid -->
     <div class="row">
-        <div class="col-12 mb-3">
+        <div class="col-12 mb-3 scroll-fade">
             <h4>{{ isset($selectedCategory) ? $selectedCategory->name : 'Semua Produk' }}</h4>
         </div>
         
         @forelse($products as $product)
-            <div class="col-md-3 col-sm-6 mb-4">
+            <div class="col-md-3 col-sm-6 mb-4 scroll-fade">
                 <div class="card h-100">
                     @if($product->image)
-                        <img src="{{ asset('images/' . $product->image) }}" class="card-img-top product-image" alt="{{ $product->name }}">
+                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top product-image" alt="{{ $product->name }}">
                     @else
                         <div class="card-img-top product-image bg-light d-flex align-items-center justify-content-center">
                             <i class="fas fa-cookie-bite fa-5x text-muted"></i>
                         </div>
                     @endif
                     
-                    <div class="card-body d-flex flex-column">
+                    <div class="card-body d-flex flex-column scroll-fade">
                         <span class="badge badge-custom mb-2 align-self-start">{{ $product->category->name }}</span>
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text text-muted small">{{ Str::limit($product->description, 80) }}</p>
@@ -73,8 +96,8 @@
                             
                             @auth
                                 @if(auth()->user()->isCustomer())
-                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                        @csrf
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="form-add-to-cart">
+                                    @csrf
                                         <button type="submit" class="btn btn-primary btn-sm w-100" {{ $product->stock == 0 ? 'disabled' : '' }}>
                                             <i class="fas fa-cart-plus"></i> 
                                             {{ $product->stock == 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}

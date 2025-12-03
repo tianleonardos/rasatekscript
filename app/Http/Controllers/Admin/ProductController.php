@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -33,8 +34,18 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
-        }
+            $file = $request->file('image');
+            
+            // 1. Buat nama file custom (Nama Produk + Timestamp agar unik)
+            // Contoh: chocolate-chip-cookies-1709882.jpg
+            $filename = Str::slug($validated['name']) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            
+            // 2. Simpan dengan nama baru menggunakan storeAs
+            // Hasil path di database akan: "products/nama-file-kustom.jpg"
+            $path = $file->storeAs('products', $filename, 'public');
+            
+            $validated['image'] = $path;
+            }
 
         Product::create($validated);
 
@@ -53,7 +64,7 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories'));
     }
-
+    
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -70,7 +81,14 @@ class ProductController extends Controller
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            
+            $file = $request->file('image');
+            
+            // LOGIKA YANG SAMA DENGAN STORE
+            $filename = Str::slug($validated['name']) . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('products', $filename, 'public');
+            
+            $validated['image'] = $path;
         }
 
         $product->update($validated);
@@ -78,7 +96,6 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Produk berhasil diupdate!');
     }
-
     public function destroy(Product $product)
     {
         if ($product->image) {

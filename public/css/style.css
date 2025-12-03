@@ -1,0 +1,153 @@
+:root {
+    --intro-bg: #A03C3C; /* Warna Merah Bata */
+}
+
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--intro-bg);
+    z-index: 9999; /* Paling atas di atas segalanya */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Animasi Slide Up: Diam sebentar (0.8s), lalu geser ke atas */
+    /* Delay dikurangi agar terasa seperti transisi masuk */
+    animation: slideUp 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    animation-delay: 1.5s; 
+}
+
+
+
+.intro-logo-img {
+    max-width: 80%; /* Agar responsif di HP */
+    width: 1000px;   /* Ukuran logo desktop */
+    height: auto;
+    
+    /* Animasi Logo: Muncul (Zoom In) */
+    opacity: 0;
+    animation: logoEntrance 0.8s ease-out forwards;
+    animation-delay: 0.5s; /* Muncul lebih cepat dari sebelumnya */
+}
+
+/* Keyframes untuk Layar Geser ke Atas (Buka Tirai) */
+@keyframes slideUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); visibility: hidden; }
+}
+
+/* Keyframes untuk Layar Geser ke Bawah (Tutup Tirai) */
+@keyframes slideDown {
+    0% { transform: translateY(-100%); visibility: visible; }
+    100% { transform: translateY(0); }
+}
+
+/* Keyframes untuk Logo Muncul */
+@keyframes logoEntrance {
+    0% { 
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.scrolling-text {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #fff3cd; /* Warna kuning soft */
+    color: #856404; /* Teks coklat */
+    padding: 10px 0;
+    border-bottom: 1px solid #ffeeba;
+}
+
+.scrolling-text div {
+    display: inline-block;
+    padding-left: 100%;
+    /* Animasi jalan 20 detik, linear, selamanya */
+    animation: scrolling 20s linear infinite;
+}
+
+@keyframes scrolling {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+:root {
+    --primary-color: #d97706;
+    --secondary-color: #f59e0b;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #FDFCDC);
+    min-height: 100vh;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #b45309;
+    border-color: #b45309;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+ }
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,.2);
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.badge-custom {
+    background-color: var(--primary-color);
+}
+
+footer {
+    background-color: #1f2937;
+    color: white;
+    margin-top: 50px;
+}
+
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(50px); /* Geser ke bawah sedikit agar ada efek naik */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform; /* Optimasi performa render */
+}
+
+/* Keadaan ketika elemen terlihat di layar (Muncul) */
+.scroll-fade.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}

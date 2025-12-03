@@ -103,7 +103,7 @@
                             
                             @if($product->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('images/' . $product->image) }}" 
+                                    <img src="{{ asset('storage/' . $product->image) }}" 
                                          alt="Current Image" 
                                          class="img-thumbnail" 
                                          style="max-width: 200px;">

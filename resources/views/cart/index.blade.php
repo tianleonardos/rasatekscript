@@ -25,7 +25,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if($item['image'])
-                                                    <img src="{{ asset('images/' . $item['image']) }}" 
+                                                    <img src="{{ asset('storage/' . $item['image']) }}" 
                                                          width="80" class="rounded me-3" alt="{{ $item['name'] }}">
                                                 @else
                                                     <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">

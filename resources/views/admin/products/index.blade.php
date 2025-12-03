@@ -34,7 +34,7 @@
                                 <td>{{ $product->id }}</td>
                                 <td>
                                     @if($product->image)
-                                        <img src="{{ asset('images/' . $product->image) }}" width="60" class="rounded" alt="{{ $product->name }}">
+                                        <img src="{{ asset('storage/' . $product->image) }}" width="60" class="rounded" alt="{{ $product->name }}">
                                     @else
                                         <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                                             <i class="fas fa-cookie-bite fa-2x text-muted"></i>

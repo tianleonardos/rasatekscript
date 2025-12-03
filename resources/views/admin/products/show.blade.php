@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body text-center">
                     @if($product->image)
-                        <img src="{{ asset('images/' . $product->image) }}" 
+                        <img src="{{ asset('storage/' . $product->image) }}"
                              alt="{{ $product->name }}" 
                              class="img-fluid rounded shadow">
                     @else

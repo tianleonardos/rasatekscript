@@ -64,7 +64,9 @@
                                     @elseif($order->e_wallet_type == 'gopay')
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GoPay" style="height: 24px; margin-right: 8px;"> GoPay
                                     @elseif($order->e_wallet_type == 'shopeepay')
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/ShopeePay_logo.svg" alt="ShopeePay" style="height: 24px; margin-right: 8px;"> ShopeePay
+                                        <label class="form-check-label" for="shopeepay">
+                                            <span style="background: linear-gradient(45deg, #EE4D2D, #FF6B35); color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: bold; margin-right: 5px;">SPay</span> ShopeePay
+                                        </label> 
                                     @endif
                                 </div>
                             @endif
@@ -101,7 +103,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if($item->product && $item->product->image)
-                                                    <img src="{{ asset('images/' . $item->product->image) }}"
+                                                    <img src="{{ asset('storage/' . $item->product->image) }}"
                                                          alt="{{ $item->product->name }}"
                                                          class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
                                                 @endif

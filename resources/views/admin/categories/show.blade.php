@@ -97,7 +97,7 @@
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center">
                                     @if($product->image)
-                                        <img src="{{ asset('images/' . $product->image) }}"
+                                        <img src="{{ asset('storage/' . $product->image) }}"
                                              width="40" class="rounded me-3" alt="{{ $product->name }}">
                                     @else
                                         <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
